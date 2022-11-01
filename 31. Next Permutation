@@ -1,0 +1,43 @@
+class Solution {
+public:
+
+    void swap(int a,int b,vector<int> &arr)
+    {
+        int temp = arr[a];
+        arr[a]   = arr[b];
+        arr[b]   = temp;
+    }
+    void nextPermutation(vector<int>& nums) {
+        int n = nums.size();
+
+        int index1=-1,index2=-1,k=0;
+        for(int i=n-2;i>=0;i--)
+        {
+            if(nums[i] < nums[i+1])
+            {
+                index1 = i;
+                k = 1;
+                break;
+            }
+        }
+        if(k==0)
+        {
+            reverse(nums.begin(),nums.end());
+            return;
+        }
+        for(int i = n-1;i>index1;i--)
+        {
+            if(nums[i] > nums[index1])
+            {
+                index2 = i;
+                break;
+            }
+        }
+
+        swap(index1,index2,nums);
+
+        reverse(nums.begin()+index1+1,nums.end());
+        return;
+
+    }
+};
