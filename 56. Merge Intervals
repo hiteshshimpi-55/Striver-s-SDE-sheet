@@ -1,0 +1,43 @@
+class Solution {
+public:
+
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+    int n = intervals.size();
+    sort(intervals.begin(),intervals.end());
+//    stack<pair<int,int>> st;
+    int begin = 0;
+    vector<vector<int>> res;
+    stack<int> st;
+    for(int i=0;i<n;i++)
+    {
+        if(st.empty())
+        {
+            begin = intervals[i][0];
+            st.push(intervals[i][1]);
+        }
+        else
+        {
+            if(st.top() >= intervals[i][0])
+            {
+                int newTop = max(st.top(),intervals[i][1]);
+                st.pop();
+                st.push(newTop);
+            }
+            else
+            {
+                vector<int> ar;
+                ar.push_back(begin);
+                ar.push_back(st.top());
+                st.push(intervals[i][1]);
+                begin = intervals[i][0];
+                res.push_back(ar);
+            }
+        }
+    }
+    vector<int> ar;
+    ar.push_back(begin);
+    ar.push_back(st.top());
+    res.push_back(ar);
+    return res;
+}
+};
