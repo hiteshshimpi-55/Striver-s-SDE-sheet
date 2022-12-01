@@ -44,3 +44,67 @@ public:
     }
 
 };
+
+// Optimal solution using snake ladder trick (GFG question)
+
+class Solution {
+public:
+
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        int ptr = matrix[0].size()-1;
+
+        int i = 0;
+        while(i<n && ptr>=0)
+        {
+            if(matrix[i][ptr] == target)
+               return true;
+            if(matrix[i][ptr]>target)
+            {
+                ptr--;
+            }
+            else if(matrix[i][ptr] < target)
+            {
+                i++;
+            }
+        }
+        return false;
+    }
+
+};
+
+// Optimal fo leetCode variant Question
+
+class Solution {
+public:
+
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+
+        int n = matrix.size();
+        int m = matrix[0].size();
+        if(!matrix.size()) return false;
+
+        int start = 0,end = (m*n)-1;
+
+        while(start<=end)
+        {
+            int mid = start + (end-start)/2;
+
+            int i = mid/m;
+            int j = mid%m;
+
+            if(target == matrix[i][j])
+               return true;
+            else if(target > matrix[i][j])
+            {
+                start = mid+1;
+            }
+            else
+                end = mid-1;
+        }
+
+        return false;
+    }
+
+};
