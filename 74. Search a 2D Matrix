@@ -1,0 +1,46 @@
+Binary Search Approach
+
+TC : O(N) + O(LogN)
+class Solution {
+public:
+       bool binarySearch(vector<int> &arr,int num)
+    {
+        int start=0,end=arr.size()-1;
+
+        while(start<=end)
+        {
+            int mid = start + (end-start)/2;
+
+            if(arr[mid]==num)
+                return true;
+            else if(arr[mid] > num)
+                end = mid-1;
+            else
+                start = mid+1;
+        }
+
+        return false;
+    }
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+
+        bool f = false;
+        int fi = 0;
+        int n = matrix.size();      //1
+        int j = matrix[0].size()-1; //0
+        for(int i=0;i<n;i++){
+            if(matrix[i][j] == target)
+                return true;
+            else if(matrix[i][j] > target) {
+                fi = i;
+                f = true;
+                break;
+            }
+        }
+
+        if(f)
+            return binarySearch(matrix[fi],target);
+        else
+            return false;
+    }
+
+};
