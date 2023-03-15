@@ -1,0 +1,73 @@
+
+// Approach Better 
+// T.C -> O(N)
+// S.C -> O(2N)
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n = height.size();
+        int ans = 0;
+
+        vector<int> right(n,0);
+        vector<int> left(n,0);
+        int maxL = height[0];
+        int maxR = height[n-1];
+
+        for(int i=0;i<n;++i){
+            if(height[i] > maxL){
+                maxL = height[i];
+            }
+
+            left[i] = maxL;
+        }
+
+        for(int i=n-1;i>=0;--i){
+            if(height[i] > maxR){
+                maxR = height[i];
+            }
+
+            right[i] = maxR;
+        }
+
+        for(int i=0;i<n;++i){
+            
+            ans+=(min(left[i],right[i])-height[i]);
+        }
+
+        return ans;
+    }
+};
+
+
+
+// Approach 2 ( Optimised )
+// T.C -> O(N)
+// S.C -> O(1)
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n = height.size();
+        int l = 0, r = n-1;
+        int left_max = 0, right_max = 0;
+        int ans = 0;
+        while(l<=r){
+            if(height[l]<=height[r]){
+                if(height[l] >= left_max)
+                    left_max = height[l];
+                else
+                    ans += (left_max - height[l]);
+                l++;        
+            }else{
+                if(height[r] >= right_max)
+                    right_max = height[r];
+                else
+                    ans += (right_max - height[r]);                    
+                r--;            
+            }
+        }
+
+        return ans;
+    }
+};
